@@ -53,6 +53,9 @@ find_package(catkin REQUIRED COMPONENTS
     diagnostic_updater    
     dynamic_reconfigure
     zed_interfaces
+    visualization_msgs
+    nav_msgs
+    shape_msgs
 )
 
 generate_dynamic_reconfigure_options(
@@ -108,7 +111,7 @@ link_directories(${CUDA_LIBRARY_DIRS})
 ###############################################################################
 # ZED WRAPPER NODELET
 
-add_definitions(-std=c++11 -Wno-deprecated-declarations)
+add_definitions(-std=c++17 -Wno-deprecated-declarations)
 set(LINK_LIBRARIES
   ${catkin_LIBRARIES}
   ${ZED_LIBRARIES}
@@ -124,6 +127,7 @@ add_library(ZEDNodelets
 )
 target_include_directories(ZEDNodelets PRIVATE ${INCLUDE_DIRS})
 target_link_libraries(ZEDNodelets ${LINK_LIBRARIES})
+target_link_libraries(ZEDNodelets cuda)
 add_dependencies(
     ZEDNodelets
     ${catkin_EXPORTED_TARGETS}
